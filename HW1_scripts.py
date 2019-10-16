@@ -27,12 +27,14 @@ plt.figure()
 plt.plot(t1, f(t1), 'b-')
 #plt.savefig("graph_1.png")
 
-def plotGraphWithLines(x_pts, colors):
+#%%
+def plotGraphWithLines(x_pts=[], colors=[], labels=[]):
     t1 = np.arange(-3, 9.05, 0.05)
     plt.figure()
+    plt.plot(t1, f(t1), 'b-', label='f(x)')
     for i in range(len(x_pts)):
-        plt.axvline(x_pts[i], color=colors[i])
-    plt.plot(t1, f(t1), 'b-')
+        plt.axvline(x_pts[i], color=colors[i], label=labels[i])
+    plt.legend()
     
 #%%
 def c_rate(x, degree=1):
@@ -156,7 +158,7 @@ def SecantMethod(x_0, x_1, epsilon):
 #%%
 
 x, fx, res = BisectionMethod(-3,9,0.001)
-plotGraphWithLines([x,-3,9],['r','g','g'])
+plotGraphWithLines([x,-3,9],['r','g','g'],['x*','a','b'])
 
 x, fx, res = GoldenSection(-3,9,0.001)
 x, fx, res = NewtonsMethod(4,0.001)
@@ -165,5 +167,4 @@ x, fx, res = NewtonsMethod(3,0.001)
 x, fx, res2 = NewtonsMethod2(3,0.001)
 
 x, fx, res = SecantMethod(3,3.1,0.001)
-
 
