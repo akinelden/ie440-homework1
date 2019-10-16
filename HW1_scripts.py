@@ -25,6 +25,14 @@ ddf = lambdify(x, second_deriv, 'numpy')
 t1 = np.arange(-3, 9.05, 0.05)
 plt.figure()
 plt.plot(t1, f(t1), 'b-')
+#plt.savefig("graph_1.png")
+
+def plotGraphWithLines(x_pts, colors):
+    t1 = np.arange(-3, 9.05, 0.05)
+    plt.figure()
+    for i in range(len(x_pts)):
+        plt.axvline(x_pts[i], color=colors[i])
+    plt.plot(t1, f(t1), 'b-')
     
 #%%
 def c_rate(x, degree=1):
@@ -148,6 +156,8 @@ def SecantMethod(x_0, x_1, epsilon):
 #%%
 
 x, fx, res = BisectionMethod(-3,9,0.001)
+plotGraphWithLines([x,-3,9],['r','g','g'])
+
 x, fx, res = GoldenSection(-3,9,0.001)
 x, fx, res = NewtonsMethod(4,0.001)
 
