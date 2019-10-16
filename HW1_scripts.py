@@ -107,9 +107,8 @@ def NewtonsMethod(x_0, epsilon):
 #%%
 def NewtonsMethod2(x_0, epsilon):
     iteration = 0
-    x_1 = x_0
+    res = []
     while True:
-        x_0 = x_1
         dfx0 = df(x_0)
         ddfx0 = ddf(x_0)
         x_1 = x_0-dfx0/ddfx0
@@ -117,19 +116,44 @@ def NewtonsMethod2(x_0, epsilon):
         iteration +=1
         if abs(x_0-x_1)<epsilon:
             break
-    res.append([iteration+1, x_1, f(x_1), df(x_1), ddf(x_1)])
+        else: 
+            x_0 = x_1
+    res.append([iteration, x_1, f(x_1), df(x_1), ddf(x_1)])
     result_table = pd.DataFrame(res, columns = ['iteration', 'x', 'f(x)', "f'(x)", "f''(x)"])
     result_table['c_rate'] = pd.Series(c_rate(result_table.x, 2))
     x_star = x_1
     fx_star = f(x_1)
     return x_star, fx_star, result_table
 #%%
+def SecantMethod(x_0, x_1, epsilon):
+    iteration = 0
+    res = [[iteration, x_0, f(x_0), df(x_0)]]
+    iteration += 1
+    while True:
+        dfx0 = df(x_0)
+        dfx1 = df(x_1)
+        x_next = x_1 - dfx1 / (dfx1 - dfx0) * (x_1 - x_0)
+        res.append([iteration, x_1, f(x_1), dfx1])
+        iteration +=1
+        if abs(x_next-x_1)<epsilon:
+            break
+        x_0 = x_1
+        x_1 = x_next
+    res.append([iteration, x_next, f(x_next), df(x_next)])
+    result_table = pd.DataFrame(res, columns = ['iteration', 'x', 'f(x)', "f'(x)"])
+    result_table['c_rate'] = pd.Series(c_rate(result_table.x, 1.618))
+    x_star = x_next
+    fx_star = f(x_next)
+    return x_star, fx_star, result_table
+#%%
 
 x, fx, res = BisectionMethod(-3,9,0.001)
 x, fx, res = GoldenSection(-3,9,0.001)
-x, fx, res = NewtonsMethod(3,0.001)
 x, fx, res = NewtonsMethod(4,0.001)
 
-x, fx, res2 = NewtonsMethod(3,0.001)
-x, fx, res3 = NewtonsMethod2(3,0.001)
+x, fx, res = NewtonsMethod(3,0.001)
+x, fx, res2 = NewtonsMethod2(3,0.001)
+
+x, fx, res = SecantMethod(3,3.1,0.001)
+
 
