@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Oct 12 13:46:53 2019
-
-@author: akin
 """
 import numpy as np
 from sympy import Symbol, cos, sin, lambdify
@@ -37,12 +35,6 @@ def c_rate(x, degree=1):
     for i in range(1,(len(x) -1)):
         res.append(np.abs(x[i+1] - x[i])/np.abs(x[i] - x[i-1])**degree)
     return res
-def log_c_rate(x,degree=1):
-    log_res = [None]
-    for i in range(1,(len(x) -1)):
-         log_res.append(-np.log(np.abs(x[i+1] - x[i])/np.abs(x[i] - x[i-1])**degree))
-
-    return log_res 
 #%%
 def BisectionMethod(a=-3,b=9,epsilon=0.001) :
     iteration=0
@@ -61,6 +53,7 @@ def BisectionMethod(a=-3,b=9,epsilon=0.001) :
     res.append([iteration, a, b, x_star, fx_star])
     result_table = pd.DataFrame(res, columns=['iteration' ,'a', 'b', 'x', 'f(x)'])
     result_table['c_rate'] = pd.Series(c_rate(result_table.x))
+    result_table["log_c_rate"] = -np.log(result_table.c_rate)
     return x_star, fx_star, result_table
 
 #%%
@@ -90,7 +83,7 @@ def GoldenSection(a,b,epsilon):
         res.append([iteration, a, b, x_1, x_2, fx_1, fx_2])
     result_table = pd.DataFrame(res, columns = ['iteration', 'a', 'b', 'x', 'y', 'f(x)', 'f(y)'])
     result_table['c_rate'] = pd.Series(c_rate((result_table.a + result_table.b)/2))
-    result_table["log_c_rate"]=pd.Series(log_c_rate(result_table.x))
+    result_table["log_c_rate"] = -np.log(result_table.c_rate)
     x_star = (a+b)/2
     fx_star = f(x_star)
     return x_star, fx_star, result_table
@@ -112,7 +105,6 @@ def NewtonsMethod(x_0, epsilon):
     res.append([iteration+1, x_1, f(x_1), df(x_1), ddf(x_1)])
     result_table = pd.DataFrame(res, columns = ['iteration', 'x', 'f(x)', "f'(x)", "f''(x)"])
     result_table['c_rate'] = pd.Series(c_rate(result_table.x, 2))
-    result_table["log_c_rate"]=pd.Series(log_c_rate(result_table.x))
     x_star = x_1
     fx_star = f(x_1)
     return x_star, fx_star, result_table
@@ -134,7 +126,6 @@ def NewtonsMethod2(x_0, epsilon):
     res.append([iteration, x_1, f(x_1), df(x_1), ddf(x_1)])
     result_table = pd.DataFrame(res, columns = ['iteration', 'x', 'f(x)', "f'(x)", "f''(x)"])
     result_table['c_rate'] = pd.Series(c_rate(result_table.x, 2))
-    result_table["log_c_rate"]=pd.Series(log_c_rate(result_table.x))
     x_star = x_1
     fx_star = f(x_1)
     return x_star, fx_star, result_table
@@ -156,7 +147,6 @@ def SecantMethod(x_0, x_1, epsilon):
     res.append([iteration, x_next, f(x_next), df(x_next)])
     result_table = pd.DataFrame(res, columns = ['iteration', 'x', 'f(x)', "f'(x)"])
     result_table['c_rate'] = pd.Series(c_rate(result_table.x, 1.618))
-    result_table["log_c_rate"]=pd.Series(log_c_rate(result_table.x))
     x_star = x_next
     fx_star = f(x_next)
     return x_star, fx_star, result_table
