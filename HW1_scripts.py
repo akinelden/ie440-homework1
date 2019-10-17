@@ -89,7 +89,7 @@ def GoldenSection(a,b,epsilon):
     return x_star, fx_star, result_table
 
 #%%
-def NewtonsMethod(x_0, epsilon):
+def NewtonsMethod(a, b, x_0, epsilon):
     iteration = 0
     res = []
     while True:
@@ -102,6 +102,9 @@ def NewtonsMethod(x_0, epsilon):
             break
         else: 
             x_0 = x_1
+        if x_1<a or x_1>b:
+            print("Error: The Newton\'s method is not able to find any local minimum in the given range")
+            break
     res.append([iteration, x_1, f(x_1), df(x_1), ddf(x_1)])
     result_table = pd.DataFrame(res, columns = ['iteration', 'x', 'f(x)', "f'(x)", "f''(x)"])
     result_table['c_rate'] = pd.Series(c_rate(result_table.x, 2))
@@ -136,9 +139,8 @@ plotGraphWithLines([x_star,-3,9],['r','g','g'],['x*','a','b'])
 print(res.to_latex(index=False,float_format='%.4f'))
 
 x_star, fx_star, res = GoldenSection(-3,9,0.001)
-x_star, fx_star, res = NewtonsMethod(4,0.001)
 
-x_star, fx_star, res = NewtonsMethod(3,0.001)
+x_star, fx_star, res = NewtonsMethod(-3,9,3,0.001)
 
 x_star, fx_star, res = SecantMethod(3,3.1,0.001)
 
