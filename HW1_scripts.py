@@ -26,7 +26,7 @@ def plotGraphWithLines(x_pts=[], colors=[], labels=[]):
     for i in range(len(x_pts)):
         plt.axvline(x_pts[i], color=colors[i], label=labels[i])
     plt.legend()
-    #plt.savefig("graph.png")
+    plt.savefig("graph.png")
     
 plotGraphWithLines()
 #%%
@@ -130,10 +130,75 @@ def SecantMethod(x_0, x_1, epsilon):
     fx_star = f(x_next)
     return x_star, fx_star, result_table
 #%%
+'''
+Bisection Model-1
+'''
+a=-3
+b=9
+x_star, fx_star, res = BisectionMethod(a,b,0.001)
+lines = [x_star,a,b]
+colors = ['r','g','g']
+labels = ['x*','a,b','']
+for i in range(min(len(res.x)-1,4)):
+    lines.append(res.x[i])
+    colors.append('y')
+    labels.append('')
+labels[-1] = 'intermediary steps'
+plotGraphWithLines(lines,colors,labels)
+#print(res.to_latex(index=False,float_format='%.4f'))
+#%%
+'''
+Bisection Model-2
+'''
+a=-2
+b=8
+x_star, fx_star, res = BisectionMethod(a,b,0.001)
+lines = [x_star,a,b]
+colors = ['r','g','g']
+labels = ['x*','a,b','']
+for i in range(min(len(res.x)-1,4)):
+    lines.append(res.x[i])
+    colors.append('y')
+    labels.append('')
+labels[-1] = 'intermediary steps'
+plotGraphWithLines(lines,colors,labels)
+#print(res.to_latex(index=False,float_format='%.4f'))
+#%%
+'''
+Bisection Model-3
+'''
+a=2
+b=9
+x_star, fx_star, res = BisectionMethod(a,b,0.001)
+lines = [x_star,a,b]
+colors = ['r','g','g']
+labels = ['x*','a,b','']
+for i in range(min(len(res.x)-1,4)):
+    lines.append(res.x[i])
+    colors.append('y')
+    labels.append('')
+labels[-1] = 'intermediary steps'
+plotGraphWithLines(lines,colors,labels)
+#print(res.to_latex(index=False,float_format='%.4f'))
+#%%
+'''
+Bisection Model-4
+'''
+a=2.1
+b=9
+x_star, fx_star, res = BisectionMethod(a,b,0.001)
+lines = [x_star,a,b]
+colors = ['r','g','g']
+labels = ['x*','a,b','']
+for i in range(min(len(res.x)-1,4)):
+    lines.append(res.x[i])
+    colors.append('y')
+    labels.append('')
+labels[-1] = 'intermediary steps'
+plotGraphWithLines(lines,colors,labels)
+#print(res.to_latex(index=False,float_format='%.4f'))
 
-x_star, fx_star, res = BisectionMethod(-3,9,0.001)
-plotGraphWithLines([x_star,-3,9],['r','g','g'],['x*','a','b'])
-print(res.to_latex(index=False,float_format='%.4f'))
+#%%
 
 x_star, fx_star, res = GoldenSection(-3,9,0.001)
 x_star, fx_star, res = NewtonsMethod(4,0.001)
