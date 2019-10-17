@@ -153,8 +153,8 @@ def SecantMethod(x_0, x_1, epsilon):
 #%%
 
 x_star, fx_star, res = BisectionMethod(-3,9,0.001)
-plotGraphWithLines([x,-3,9],['r','g','g'],['x*','a','b'])
-
+plotGraphWithLines([x_star,-3,9],['r','g','g'],['x*','a','b'])
+print(res.to_latex(index=False,float_format='%.4f'))
 
 x_star, fx_star, res = GoldenSection(-3,9,0.001)
 x_star, fx_star, res = NewtonsMethod(4,0.001)
