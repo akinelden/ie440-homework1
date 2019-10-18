@@ -202,7 +202,83 @@ plotGraphWithLines(lines,colors,labels)
 #print(res.to_latex(index=False,float_format='%.4f'))
 
 #%%
+'''
+Golden Section Model -2 
+'''
+a=3.5
+b=9
+epsilon=0.001
+x_star, fx_star, res = GoldenSection(a,b,epsilon)
+lines = [x_star,a,b]
+colors = ['r','g','g']
+labels = ['x*','a,b','']
+for i in range(min(len(res.x)-1,4)):
+    lines.append(res.x[i])
+    colors.append('y')
+    labels.append('')
+labels[-1] = 'intermediary steps'
+plotGraphWithLines(lines,colors,labels)
+#print(res.to_latex(index=False,float_format='%.4f'))
+round(x_star,4),round(fx_star,4)
+#%%
+'''
+Golden Section Model - 3
 
+'''
+a=-3
+b=9
+epsilon=0.669
+x_star, fx_star, res = GoldenSection(a,b,epsilon)
+lines = [x_star,a,b]
+colors = ['r','g','g']
+labels = ['x*','a,b','']
+for i in range(min(len(res.x)-1,4)):
+    lines.append(res.x[i])
+    colors.append('y')
+    labels.append('')
+labels[-1] = 'intermediary steps'
+plotGraphWithLines(lines,colors,labels)
+#print(res.to_latex(index=False,float_format='%.4f'))
+round(x_star,4),round(fx_star,4)
+#%%
+'''
+Golden Section Model 1
+'''
+a=-3
+b=9
+epsilon=0.001
+x_star, fx_star, res = GoldenSection(a,b,epsilon)
+lines = [x_star,a,b]
+colors = ['r','g','g']
+labels = ['x*','a,b','']
+for i in range(min(len(res.x)-1,3)):
+    lines.append(res.x[i])
+    colors.append('y')
+    labels.append('')
+labels[-1] = 'intermediary steps'
+plotGraphWithLines(lines,colors,labels)
+#print(res.to_latex(index=False,float_format='%.4f'))
+round(x_star,4),round(fx_star,4)
+#%%
+'''
+Golden Section Model -4
+'''
+a=3.80
+b=8
+epsilon=0.001
+x_star, fx_star, res = GoldenSection(a,b,epsilon)
+lines = [x_star,a,b]
+colors = ['r','g','g']
+labels = ['x*','a,b','']
+for i in range(min(len(res.x)-1,2)):
+    lines.append(res.x[i])
+    colors.append('y')
+    labels.append('')
+labels[-1] = 'intermediary steps'
+plotGraphWithLines(lines,colors,labels)
+#print(res.to_latex(index=False,float_format='%.4f'))
+round(x_star,4),round(fx_star,4)
+#%%
 x_star, fx_star, res = GoldenSection(-3,9,0.001)
 
 x_star, fx_star, res = NewtonsMethod(-3,9,3,0.001)
