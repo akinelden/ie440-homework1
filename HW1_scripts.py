@@ -301,4 +301,19 @@ for par in secant_par:
     plotGraphWithLines(lines,colors,labels, 'secant' + str(par[0]))
     print(res.to_latex(index=False,float_format='%.4f'))
     print(round(x_star,4),round(fx_star,4))
+#%%
+'''
+Newton's Method
+'''
+newton_par = [[3.5, 0.001], [6.6, 0.0001], [7.5, 0.001], [7.6, 0.005]]
+a= -3
+b= 9
+for par in newton_par:
+    x_star, fx_star, res = NewtonsMethod(a, b, par[0], par[1])
+    lines = [x_star,par[0],a,b]
+    colors = ['r','y','g','g']
+    labels = ['x*','x0','a,b','']
+    plotGraphWithLines(lines,colors,labels, 'newton' + str(par[0]))
+    #print(res.to_latex(index=False,float_format='%.4f'))
+    print(round(x_star,4),round(fx_star,4),round(ddf(x_star),4))
 
