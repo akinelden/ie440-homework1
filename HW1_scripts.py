@@ -19,14 +19,14 @@ df = lambdify(x, first_deriv, 'numpy')
 ddf = lambdify(x, second_deriv, 'numpy')
 
 #%%
-def plotGraphWithLines(x_pts=[], colors=[], labels=[]):
+def plotGraphWithLines(x_pts=[], colors=[], labels=[], name="graph"):
     t1 = np.arange(-3, 9.05, 0.05)
     plt.figure()
     plt.plot(t1, f(t1), 'b-', label='f(x)')
     for i in range(len(x_pts)):
         plt.axvline(x_pts[i], color=colors[i], label=labels[i])
     plt.legend()
-    plt.savefig("graph.png")
+    plt.savefig("{0}.png".format(name))
     
 plotGraphWithLines()
 #%%
@@ -112,7 +112,7 @@ def NewtonsMethod(a, b, x_0, epsilon):
     fx_star = f(x_1)
     return x_star, fx_star, result_table
 #%%
-def SecantMethod(x_0, x_1, epsilon):
+def SecantMethod(x_0, x_1, epsilon, a=-3, b=9):
     iteration = 0
     res = [[iteration, x_0, f(x_0), df(x_0)]]
     iteration += 1
@@ -126,6 +126,9 @@ def SecantMethod(x_0, x_1, epsilon):
             break
         x_0 = x_1
         x_1 = x_next
+        if x_next<a or x_next>b:
+            print("Error: The Secant method is not able to find any local minimum in the given range")
+            break
     res.append([iteration, x_next, f(x_next), df(x_next)])
     result_table = pd.DataFrame(res, columns = ['iteration', 'x', 'f(x)', "f'(x)"])
     result_table['c_rate'] = pd.Series(c_rate(result_table.x, 1.618))
@@ -279,9 +282,23 @@ plotGraphWithLines(lines,colors,labels)
 #print(res.to_latex(index=False,float_format='%.4f'))
 round(x_star,4),round(fx_star,4)
 #%%
-x_star, fx_star, res = GoldenSection(-3,9,0.001)
-
-x_star, fx_star, res = NewtonsMethod(-3,9,3,0.001)
-
-x_star, fx_star, res = SecantMethod(3,3.1,0.001)
+'''
+Secant Method
+'''
+secant_par = [[6 ,7, 0.001], [1, 2, 0.005], [3, 5, 0.0001]]
+a= -3
+b= 9
+for par in secant_par:
+    x_star, fx_star, res = SecantMethod(par[0],par[1],par[2])
+    lines = [x_star,a,b]
+    colors = ['r','g','g']
+    labels = ['x*','a,b','']
+    for i in range(min(len(res.x)-1,2)):
+        lines.append(res.x[i])
+        colors.append('y')
+        labels.append('')
+    labels[-1] = 'intermediary steps'
+    plotGraphWithLines(lines,colors,labels, 'secant' + str(par[0]))
+    print(res.to_latex(index=False,float_format='%.4f'))
+    print(round(x_star,4),round(fx_star,4))
 
