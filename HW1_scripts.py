@@ -116,8 +116,8 @@ def SecantMethod(x_0, x_1, epsilon, a=-3, b=9):
     iteration = 0
     res = [[iteration, x_0, f(x_0), df(x_0)]]
     iteration += 1
+    dfx0 = df(x_0)
     while True:
-        dfx0 = df(x_0)
         dfx1 = df(x_1)
         x_next = x_1 - dfx1 / (dfx1 - dfx0) * (x_1 - x_0)
         res.append([iteration, x_1, f(x_1), dfx1])
@@ -125,6 +125,7 @@ def SecantMethod(x_0, x_1, epsilon, a=-3, b=9):
         if abs(x_next-x_1)<epsilon:
             break
         x_0 = x_1
+        dfx0 = dfx1
         x_1 = x_next
         if x_next<a or x_next>b:
             print("Error: The Secant method is not able to find any local minimum in the given range")
