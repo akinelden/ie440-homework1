@@ -286,7 +286,7 @@ round(x_star,4),round(fx_star,4)
 '''
 Secant Method
 '''
-secant_par = [[6 ,7, 0.001], [1, 2, 0.005], [3, 5, 0.0001]]
+secant_par = [[6 ,7, 0.001], [1, 2, 0.005], [3, 4, 0.0001]]
 a= -3
 b= 9
 for par in secant_par:
